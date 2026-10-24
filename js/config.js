@@ -26,7 +26,7 @@ window.INVITATION_CONFIG = {
     },
     /* Sumber foto hero. Bisa file lokal ("assets/img/couple.jpg")
        atau URL internet ("https://..."). Rasio terbaik 4:5 (potret). */
-    photo: "https://i.postimg.cc/qMW5d0js/Whats-App-Image-2026-10-18-at-16-54-47-removebg-preview.png",         // «GANTI» foto mempelai
+    photo: "<a href="https://myimgs.org/"><img src="https://myimgs.org/storage/images/66597/Couple.png" alt="myimgs" /></a><a href="https://myimgs.org/">Upload image</a>",         // «GANTI» foto mempelai
     photoAlt: "Foto Parman dan Diah",
   },
 
