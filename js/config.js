@@ -26,7 +26,7 @@ window.INVITATION_CONFIG = {
     },
     /* Sumber foto hero. Bisa file lokal ("assets/img/couple.jpg")
        atau URL internet ("https://..."). Rasio terbaik 4:5 (potret). */
-    photo: "https://myimgs.org/storage/images/66597/Couple.png"
+    photo: "https://myimgs.org/storage/images/66597/Couple.png",         // «GANTI» foto mempelai
     photoAlt: "Foto Parman dan Diah",
   },
 
@@ -46,7 +46,7 @@ window.INVITATION_CONFIG = {
       id: "akad",
       title: "Akad Nikah",
       start: "2026-08-28T08:00:00+07:00",             // «GANTI» format ISO + offset zona waktu
-      end: "2026-08-28T23:00:00+07:00",
+      end: "2026-08-28T10:00:00+07:00",
       venue: "Kantor Urusan Agama Leuwiliang",                  // «GANTI»
       address: "Jl. Raya Karehkel. Perumahan Permata Green Land",    // «GANTI»
       mapsUrl: "https://maps.app.goo.gl/XXJFs9PdoFK6ep2WA",   // opsional: tempel link Google Maps. Jika kosong, dibuat otomatis dari venue + alamat.
@@ -54,8 +54,8 @@ window.INVITATION_CONFIG = {
     {
       id: "resepsi",
       title: "Resepsi",
-      start: "2026-11-07T08:00:00+07:00",             // «GANTI»
-      end: "2026-11-07T23:00:00+07:00",
+      start: "2026-11-07T11:30:00+07:00",             // «GANTI»
+      end: "2026-11-07T14:00:00+07:00",
       venue: "Kalong Babakan Area",                   // «GANTI»
       address: "Jl. Kalong Babakan RT 03/RW 11 No.12",    // «GANTI»
       mapsUrl: "https://maps.app.goo.gl/HaYSxM9dAvM93Lqg8",
@@ -75,7 +75,7 @@ window.INVITATION_CONFIG = {
   /* ---------- Amplop digital ---------- */
   gift: {
     qris: {
-      image: "https://i.postimg.cc/rsrYDPwH/Screenshot-2026-10-24-125840.png",       // «GANTI» ke "assets/img/qris.png" (gambar QRIS asli)
+      image: "https://myimgs.org/storage/images/66606/QRIS.png",       // «GANTI» ke "assets/img/qris.png" (gambar QRIS asli)
       alt: "Kode QRIS untuk amplop digital",
     },
     banks: [
@@ -100,7 +100,7 @@ window.INVITATION_CONFIG = {
     "Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i " +
     "berkenan hadir dan memberikan doa restu. Terima kasih.",
       credit: {
-    prefix: "Created & Design by",
+    prefix: "Created And Design by",
     name: "Ekha Shaputra",
     url: "",
   },
