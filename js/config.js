@@ -26,7 +26,7 @@ window.INVITATION_CONFIG = {
     },
     /* Sumber foto hero. Bisa file lokal ("assets/img/couple.jpg")
        atau URL internet ("https://..."). Rasio terbaik 4:5 (potret). */
-    photo: "<a href="https://myimgs.org/"><img src="https://myimgs.org/storage/images/66597/Couple.png" alt="myimgs" /></a><a href="https://myimgs.org/">Upload image</a>",         // «GANTI» foto mempelai
+    photo: "https://myimgs.org/storage/images/66597/Couple.png"
     photoAlt: "Foto Parman dan Diah",
   },
 
