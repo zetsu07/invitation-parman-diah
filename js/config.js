@@ -54,8 +54,8 @@ window.INVITATION_CONFIG = {
     {
       id: "resepsi",
       title: "Resepsi",
-      start: "2026-11-07T11:30:00+07:00",             // «GANTI»
-      end: "2026-11-07T14:00:00+07:00",
+      start: "2026-11-07T08:00:00+07:00",             // «GANTI»
+      end: "2026-11-07T10:00:00+07:00",
       venue: "Kalong Babakan Area",                   // «GANTI»
       address: "Jl. Kalong Babakan RT 03/RW 11 No.12",    // «GANTI»
       mapsUrl: "https://maps.app.goo.gl/HaYSxM9dAvM93Lqg8",
