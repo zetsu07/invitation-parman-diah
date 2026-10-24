@@ -100,7 +100,7 @@ window.INVITATION_CONFIG = {
     "Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i " +
     "berkenan hadir dan memberikan doa restu. Terima kasih.",
       credit: {
-    prefix: "Created And Design by",
+    prefix: "Created & Design by",
     name: "Ekha Shaputra",
     url: "",
   },
