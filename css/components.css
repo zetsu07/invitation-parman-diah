@@ -1,0 +1,545 @@
+/* ==========================================================
+   COMPONENTS — glass, tombol running-light, tab, form, dock, toast
+   State yang tercakup: default, hover, active, focus, disabled,
+   loading (aria-busy), error (aria-invalid), empty.
+   ========================================================== */
+
+/* ---------- Liquid glass ---------- */
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(145deg, var(--glass-a), var(--glass-b));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(165%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(165%);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--r-lg);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 0 28px rgba(255, 255, 255, 0.025),
+    var(--shadow-float);
+}
+/* kilau spekular mengikuti kursor */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(18rem 14rem at var(--mx, 30%) var(--my, 0%), rgba(255, 255, 255, 0.15), transparent 62%);
+  opacity: var(--spec, 0.5);
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+@media (hover: hover) {
+  .glass:hover {
+    --spec: 1;
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(32, 32, 35, 0.9);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: rgba(30, 30, 33, 0.97);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media (max-width: 40rem) {
+  :root {
+    --glass-blur: 16px; /* hemat GPU di perangkat kecil */
+  }
+}
+
+/* ---------- Tombol ---------- */
+@keyframes run {
+  to {
+    --a: 360deg;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 3rem;
+  padding: 0.9rem 1.75rem;
+  border: 0;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04));
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 12px 26px -14px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+/* running light: cahaya yang berlari di sisi tombol */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--a),
+    transparent 0 215deg,
+    rgba(205, 185, 154, 0.6) 305deg,
+    var(--accent-bright) 350deg,
+    #fff 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: run 3.6s linear infinite;
+  pointer-events: none;
+}
+/* pendar lembut di belakang kepala cahaya */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -2;
+  border-radius: inherit;
+  background: conic-gradient(from var(--a), transparent 0 250deg, rgba(205, 185, 154, 0.38) 340deg, transparent 360deg);
+  filter: blur(9px);
+  opacity: 0.75;
+  animation: run 3.6s linear infinite;
+  pointer-events: none;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.07));
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:disabled::before,
+.btn:disabled::after {
+  animation-play-state: paused;
+}
+.btn[aria-busy="true"] {
+  pointer-events: none;
+  opacity: 0.9;
+}
+.btn__spinner {
+  display: none;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.btn[aria-busy="true"] .btn__spinner {
+  display: inline-block;
+}
+.btn svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+
+/* tombol sekunder: tanpa running light agar tidak ramai */
+.btn--quiet {
+  min-height: 2.5rem;
+  padding: 0.55rem 1.1rem;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 0 0 1px var(--glass-stroke);
+}
+.btn--quiet::before,
+.btn--quiet::after {
+  display: none;
+}
+.btn--quiet:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.btn--sm {
+  min-height: 2.75rem;
+  padding: 0.65rem 1.35rem;
+  font-size: var(--fs-xs);
+}
+
+/* ---------- Tab ---------- */
+.tabs {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0.3rem;
+  border-radius: var(--r-pill);
+}
+.tabs__lens {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0.3rem;
+  width: calc((100% - 0.6rem) / 2);
+  border-radius: var(--r-pill);
+  background: linear-gradient(160deg, rgba(205, 185, 154, 0.32), rgba(205, 185, 154, 0.12));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 18px -8px rgba(0, 0, 0, 0.6);
+  transform: translateX(calc(var(--tab, 0) * 100%));
+  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+.tabs__tab {
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.5rem;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.tabs__tab[aria-selected="true"] {
+  color: var(--accent-bright);
+}
+@media (max-width: 30rem) {
+  .tabs__tab {
+    padding-inline: 0.9rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ---------- Form ---------- */
+.field {
+  display: grid;
+  gap: var(--s-2);
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.field__label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0;
+}
+.field__hint {
+  float: right;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-faint);
+}
+.input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--r-md);
+  background: var(--field-bg);
+  color: var(--text);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.input::placeholder {
+  color: var(--text-faint);
+}
+.input:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(205, 185, 154, 0.3);
+}
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+textarea.input {
+  min-height: 7rem;
+  resize: vertical;
+}
+select.input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 1.35rem, calc(100% - 0.8rem) 1.35rem;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+select.input option {
+  background: var(--bg-2);
+  color: var(--text);
+}
+.field__error {
+  min-height: 1.25rem;
+  font-size: var(--fs-sm);
+  color: var(--danger);
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-2);
+}
+.segmented__item {
+  position: relative;
+}
+.segmented input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.segmented label {
+  display: grid;
+  place-items: center;
+  min-height: 3rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--r-md);
+  background: var(--field-bg);
+  text-align: center;
+  transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base), color var(--dur-base);
+}
+.segmented input:hover + label {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.segmented input:checked + label {
+  background: linear-gradient(160deg, rgba(205, 185, 154, 0.3), rgba(205, 185, 154, 0.1));
+  border-color: var(--accent);
+  color: var(--accent-bright);
+}
+.segmented input:focus-visible + label {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+.segmented[data-invalid="true"] label {
+  border-color: var(--danger);
+}
+
+.form-error {
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-sm);
+  border: 1px solid rgba(255, 143, 133, 0.5);
+  background: rgba(255, 143, 133, 0.09);
+  color: var(--danger);
+  font-size: var(--fs-sm);
+}
+.form-note {
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+
+/* Elemen melayang di atas konten apa pun (termasuk tile QRIS putih): kaca lebih pekat agar tetap terbaca */
+.dock,
+.music,
+.toast {
+  background: linear-gradient(145deg, rgba(54, 54, 58, 0.8), rgba(20, 20, 23, 0.86));
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(150%);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dock,
+  .music,
+  .toast {
+    background: rgba(24, 24, 27, 0.96);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .dock,
+  .music,
+  .toast {
+    background: rgba(24, 24, 27, 0.98);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ---------- Dock navigasi (kaca melayang) ---------- */
+.dock {
+  position: fixed;
+  z-index: var(--z-dock);
+  left: 0;
+  right: 0;
+  bottom: max(0.875rem, env(safe-area-inset-bottom));
+  width: min(100% - 1.5rem, 25rem);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0.3rem;
+  border-radius: var(--r-pill);
+  opacity: 0;
+  transform: translateY(170%);
+  transition: transform 0.9s var(--ease-out) 0.5s, opacity 0.6s ease 0.5s;
+}
+.dock.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.dock__lens {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0.3rem;
+  width: calc((100% - 0.6rem) / 5);
+  border-radius: var(--r-pill);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px -8px rgba(0, 0, 0, 0.6);
+  transform: translateX(calc(var(--i, 0) * 100%));
+  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+.dock__link {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  padding: 0.55rem 0.2rem 0.5rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color var(--dur-base) var(--ease-out);
+}
+.dock__link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dock__link:hover,
+.dock__link[aria-current="location"] {
+  color: var(--text);
+}
+
+/* ---------- Tombol musik ---------- */
+.music {
+  position: fixed;
+  z-index: var(--z-dock);
+  top: max(0.875rem, env(safe-area-inset-top));
+  right: max(0.875rem, env(safe-area-inset-right));
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.6s ease 0.7s, transform 0.9s var(--ease-out) 0.7s;
+}
+.music.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.music__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 1rem;
+}
+.music__bars i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent-bright);
+  transform-origin: bottom;
+  transform: scaleY(0.25);
+}
+.music[aria-pressed="true"] .music__bars i {
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+.music__bars i:nth-child(2) {
+  animation-delay: -0.35s;
+}
+.music__bars i:nth-child(3) {
+  animation-delay: -0.7s;
+}
+.music__bars i:nth-child(4) {
+  animation-delay: -0.15s;
+}
+@keyframes eq {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.yt-holder {
+  position: fixed;
+  left: -10px;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  z-index: var(--z-toast);
+  left: 50%;
+  bottom: calc(5.75rem + env(safe-area-inset-bottom));
+  max-width: min(calc(100% - 2rem), 24rem);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--r-pill);
+  text-align: center;
+  font-size: var(--fs-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 0.75rem);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
+  pointer-events: none;
+}
+.toast.is-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}

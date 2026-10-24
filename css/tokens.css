@@ -1,0 +1,100 @@
+/* ==========================================================
+   DESIGN TOKENS — satu-satunya tempat nilai visual didefinisikan
+   Palet: graphite netral + champagne hangat (bukan biru)
+   Kontras (diverifikasi): teks utama ≈ 15:1, teks redup ≈ 7:1
+   ========================================================== */
+
+/* Sudut untuk animasi "running light" di sisi tombol/frame */
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Warna dasar */
+  --bg-0: #0d0d0e;
+  --bg-1: #131314;
+  --bg-2: #1a1a1c;
+  --bg-3: #232326;
+
+  /* Teks */
+  --text: #ecebe8;
+  --text-muted: #aaa7a1;
+  --text-faint: #8f8c87;
+
+  /* Aksen: champagne */
+  --accent: #cdb99a;
+  --accent-bright: #efe2cb;
+  --on-accent: #17130d;
+
+  /* Status */
+  --danger: #ff8f85;
+  --success: #a4dcae;
+
+  /* Liquid glass */
+  --glass-a: rgba(255, 255, 255, 0.1);
+  --glass-b: rgba(255, 255, 255, 0.035);
+  --glass-stroke: rgba(255, 255, 255, 0.13);
+  --glass-edge: rgba(255, 255, 255, 0.24);
+  --glass-blur: 22px;
+  --field-bg: rgba(0, 0, 0, 0.28);
+  --shadow-float: 0 24px 48px -24px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.25);
+
+  /* Tipografi */
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.05rem + 0.9vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  --fs-2xl: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
+  --fs-hero: clamp(3.75rem, 1.5rem + 14vw, 6.5rem);
+  --fs-hero-lg: clamp(4.5rem, 8vw, 8rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.25;
+  --lh-body: 1.65;
+  --track-label: 0.2em;
+
+  /* Spasi (basis 4px) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 6.5rem;
+  --s-10: 9rem;
+
+  /* Radius */
+  --r-sm: 0.75rem;
+  --r-md: 1.25rem;
+  --r-lg: 1.75rem;
+  --r-pill: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  /* Layout */
+  --container: 70rem;
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --dock-space: 7rem;
+
+  /* Lapisan */
+  --z-content: 1;
+  --z-dock: 50;
+  --z-toast: 60;
+  --z-gate: 100;
+}

@@ -1,0 +1,252 @@
+/* ==========================================================
+   BASE — reset, tipografi dasar, layout, utilitas aksesibilitas
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg-0);
+}
+
+/* Fallback smooth scroll native; dimatikan saat mesin smooth scroll JS aktif */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.has-smooth) {
+    scroll-behavior: smooth;
+  }
+}
+html.has-smooth {
+  scroll-behavior: auto;
+}
+html.is-locked {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--text);
+  background: var(--bg-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* clip (bukan hidden) agar position: sticky pada hero tetap bekerja */
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+::selection {
+  background: rgba(205, 185, 154, 0.35);
+  color: #fff;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--s-3);
+  left: var(--s-3);
+  z-index: calc(var(--z-gate) + 1);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-sm);
+  background: var(--accent-bright);
+  color: var(--on-accent);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+main {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(var(--s-8), 12vw, var(--s-10));
+}
+
+/* ---------- Tipografi bersama ---------- */
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.display {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+}
+
+.lede {
+  max-width: 34rem;
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+}
+
+.stack > * + * {
+  margin-top: var(--s-4);
+}
+
+/* ---------- Reveal saat scroll (hanya aktif bila JS berjalan) ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Latar ambient (cahaya lembut di balik glass) ---------- */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% -10%, #1e1e20 0%, var(--bg-0) 62%);
+}
+.ambient__blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+.ambient__blob--a {
+  width: 62vmax;
+  height: 62vmax;
+  left: -22vmax;
+  top: -20vmax;
+  background: radial-gradient(closest-side, rgba(205, 185, 154, 0.22), transparent 70%);
+  animation: drift-a 30s ease-in-out infinite alternate;
+}
+.ambient__blob--b {
+  width: 52vmax;
+  height: 52vmax;
+  right: -20vmax;
+  top: 28vh;
+  background: radial-gradient(closest-side, rgba(200, 200, 206, 0.15), transparent 70%);
+  animation: drift-b 36s ease-in-out infinite alternate;
+}
+.ambient__blob--c {
+  width: 56vmax;
+  height: 56vmax;
+  left: 12vw;
+  bottom: -26vmax;
+  background: radial-gradient(closest-side, rgba(150, 140, 128, 0.2), transparent 70%);
+  animation: drift-c 42s ease-in-out infinite alternate;
+}
+.ambient__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate3d(14vmax, 10vmax, 0) scale(1.12);
+  }
+}
+@keyframes drift-b {
+  to {
+    transform: translate3d(-12vmax, -8vmax, 0) scale(1.08);
+  }
+}
+@keyframes drift-c {
+  to {
+    transform: translate3d(10vmax, -12vmax, 0) scale(1.15);
+  }
+}
+
+/* ---------- Preferensi pengguna ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
