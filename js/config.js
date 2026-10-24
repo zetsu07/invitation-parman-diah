@@ -46,7 +46,7 @@ window.INVITATION_CONFIG = {
       id: "akad",
       title: "Akad Nikah",
       start: "2026-08-28T08:00:00+07:00",             // «GANTI» format ISO + offset zona waktu
-      end: "2026-08-28T10:00:00+07:00",
+      end: "2026-08-28T23:00:00+07:00",
       venue: "Kantor Urusan Agama Leuwiliang",                  // «GANTI»
       address: "Jl. Raya Karehkel. Perumahan Permata Green Land",    // «GANTI»
       mapsUrl: "https://maps.app.goo.gl/XXJFs9PdoFK6ep2WA",   // opsional: tempel link Google Maps. Jika kosong, dibuat otomatis dari venue + alamat.
@@ -55,7 +55,7 @@ window.INVITATION_CONFIG = {
       id: "resepsi",
       title: "Resepsi",
       start: "2026-11-07T08:00:00+07:00",             // «GANTI»
-      end: "2026-11-07T10:00:00+07:00",
+      end: "2026-11-07T23:00:00+07:00",
       venue: "Kalong Babakan Area",                   // «GANTI»
       address: "Jl. Kalong Babakan RT 03/RW 11 No.12",    // «GANTI»
       mapsUrl: "https://maps.app.goo.gl/HaYSxM9dAvM93Lqg8",
